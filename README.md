@@ -70,7 +70,7 @@ To address this, this framework performs **hierarchical, supervised reference co
 1. **Unconstrained Query Profiling:** Predict initial cell identities across all spatial cells with [`SingleR`] (`v2.0.0`) using the broad human **Blueprint/ENCODE** reference ([PMID: 30643263](https://pubmed.ncbi.nlm.nih.gov/30643263/)).
 2. **Exclude Out-of-Reference Classes:** Remove lineages absent in the reference snRNA-seq (e.g., tonsillar epithelial cells).
 3. **Custom Reference Mapping:** Generate pseudobulk profiles from reference snRNA-seq populations ($N \ge 100$ cells) into a custom `celldex` reference to predict spatial cell identities.
-4. **$k$-Nearest Neighbor (KNN) Smoothing:** Refine predicted labels in PCA space ($k = 50$). Cells where $\ge 75\%$ of neighbors share the identical predicted label are designated as **high-confidence SMI anchors**.
+4. **$k$-Nearest Neighbor (KNN) Smoothing:** Refine predicted labels in PCA space ($k = 50$). Cells where $\ge 75%$ of neighbors share the identical predicted label are designated as **high-confidence SMI anchors**.
 
 ### Step 2: Major Lineage Separation
 1. **Feature Space Optimization:** Subset the feature space to the top 100 differentially expressed genes (DEGs; adjusted $P < 0.05$, $\text{FC} > 1.5$) per cell type from the snRNA-seq reference.
@@ -91,7 +91,7 @@ For non-B cell lineages (T/NK, Myeloid, NHC):
 2. **CCA Integration:** Perform `FindIntegrationAnchors(reduction = "cca")` specifying the snRNA-seq dataset as reference to map microenvironment populations across technologies.
 3. **Batch Correction & Label Transfer:** Run `Harmony` on reference cells to correct sample-level variance, establish a reference UMAP, and transfer discrete cell-type labels and coordinate projections to spatial cells using `FindTransferAnchors()` and `MapQuery()`.
 
-### Step 4: Fine-Grained Subtype & Functional State Classification
+### Step 4: Fine-Grained Subset & State Classification
 1. **Subpopulation Dissection:** Recapitulate Step 3 at deep resolution (e.g., CD4 T cell subsets C0–C7).
 2. **State-Level Marker Sets:** Re-compute top 100 DEGs differentiating intra-cell-type phenotypes.
 3. **CCA Mapping & Transfer:** Execute reference-constrained CCA co-embedding and project final subset calls and latent coordinates onto query cells.
@@ -101,8 +101,8 @@ For non-B cell lineages (T/NK, Myeloid, NHC):
 ## Scalability via Chunked Partitioning
 
 To handle spatial datasets scaling to millions of cells without exceeding system RAM in the Seurat workflow:
-- Cells are shuffled randomly at each tier and partitioned into parallel blocks of **$N \le 200,000$ cells**.
-- The pipeline was validated across chunk ranges of **100,000 to 500,000 cells**, showing consistent annotation concordance across independently processed partitions.
+- Cells are shuffled randomly at each tier and partitioned into parallel blocks of 200,000 cells.
+- The pipeline was validated across chunk ranges of 100,000 to 500,000 cells, showing consistent annotation concordance across independently processed partitions.
 - Annotated partitions are concatenated prior to the next downstream hierarchical gate.
 
 ---
