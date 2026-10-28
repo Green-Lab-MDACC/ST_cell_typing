@@ -60,7 +60,7 @@ To address this, this framework performs **hierarchical, supervised reference co
 - **Strategic Integration Anchoring:**
   - **Reciprocal PCA (RPCA):** Preserves biological heterogeneity and malignant-specific expression profiles during major lineage separation.
   - **Canonical Correlation Analysis (CCA):** Enforces alignment across technologies for shared non-malignant microenvironment populations.
-- **Semi-Supervised Label Propagation:** Augments reference training data with high-confidence spatial cells verified via local neighborhood consensus ($k$-NN), capturing assay-specific technical signals.
+- **Semi-Supervised Label Propagation:** Augments reference training data with high-confidence spatial cells verified via local K-nearest neighborhood (KNN) consensus, capturing assay-specific signals.
 
 ---
 
